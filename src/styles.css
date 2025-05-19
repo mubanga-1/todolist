@@ -12,8 +12,7 @@
     font-family: "Open Sans", sans-serif;
 }
 
-body, .side-bar, #nav-links, #modifiers,
-#modifiers > div {
+body, .side-bar, #nav-links, #modifiers{
     display: flex;
 }
 
@@ -39,16 +38,19 @@ body, .side-bar, #nav-links, #modifiers,
     align-items: center;
 }
 
-#modifiers > div {
-    justify-content: center;
-    align-items: center;
-    width: 3rem;
-    height: 3rem;
+#modifiers > button {
+    background-color: #121212;
+    color: #f1f2f3;
+    text-align: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
     border-radius: .57rem;
-    transition: 1s ease;
+    border: 1px solid #fff;
+    transition: .6s ease;
 }
 
-#modifiers > div:hover {
+#modifiers > button:hover {
     background-color: #f1f2f3;
     color: #121212;
     cursor: pointer;
