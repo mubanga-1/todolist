@@ -1,5 +1,5 @@
 // Import createElement and appendChildren function from utils.js
-import { createElement, appendChildren} from "./utils.js";
+import { createElement, appendChildren } from "./utils.js";
 
 const todolists = ["todolist1", "todolist2", "todolist3", "todolist4", "todolist5"];
 
@@ -23,10 +23,12 @@ function generateSideBar() {
 
 
     const navElementWrapper = createElement({type: "div", id: "nav-links", classList: [], text: ""});
+    navElementWrapper.dataset.name = "nav-link-wrapper";
     sidebar.appendChild(navElementWrapper);
 
     for (let i = 0; i < todolists.length; i++) {
         const newListButton = createElement({type: "div", id: "", classList: ["list"], text: `${todolists[i]}`});
+        newListButton.dataset.name = "list";
         navElementWrapper.appendChild(newListButton);
 
     }

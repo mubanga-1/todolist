@@ -65,7 +65,7 @@ body, .side-bar, #nav-links, #modifiers,
     text-transform: capitalize;
     border-radius: 6.25rem;
     border-bottom: .125rem solid transparent;
-    transition: .8s ease;
+    transition: .5s ease;
     width: max-content;
     padding-left: .5rem;
     padding-right: .5rem;
