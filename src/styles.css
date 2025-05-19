@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+}
+
+.side-bar {
+    width: 20%;
+    height: 100vh;
+    background-color: #121212;
+    color: #f1f2f3;
+    padding: 1.2rem;
+    font-size: 1.3rem;
+}
+
+.main-content {
+    width: 80%;
+    background-color: #f1f2f3;
+}
+
