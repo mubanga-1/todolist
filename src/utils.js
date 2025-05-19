@@ -18,4 +18,16 @@ function appendChildren(element, children) {
     });
 }
 
-export {createElement, appendChildren};
+
+function highlight(element, flag="r") {
+    if (flag === "h"){
+        element.style.backgroundColor = "#fff";
+        element.style.color = "#000";
+    } else {
+        element.style.backgroundColor = "";
+        element.style.color = "";
+    }
+}
+
+
+export { createElement, appendChildren, highlight };
