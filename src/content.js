@@ -9,12 +9,19 @@ function displayContent(list) {
     clearElement(contentContainer);
 
     // Create header and list elements 
-    const header = createElement({type: "div", id: "list-heading", classList: [], text: `${list.name}`});
+    const header = createElement({type: "div", id: "list-header", classList: [], text: ""});
+    const heading = createElement({type: "div", id: "list-heading", classList: [], text: `${list.name}`});
+
     const listWrapper  = createElement({type: "ul", id: "list", classList: [], text: ""});
 
+    const modifers = createElement({type: "div", id: "item-modifiers", classList: [""], text: ""});
+
     // Creating and deleting list items
-    const create = createElement({type: "div", id: "create-item", classList: ["list-item"], text: "+"});
-    const remove = createElement({type: "div", id: "remove-item", classList: ["list-item"], text: "-"});
+    const create = createElement({type: "button", id: "create-item", classList: ["item-modifier"], text: "+"});
+    const remove = createElement({type: "button", id: "remove-item", classList: ["item-modifier"], text: "-"});
+
+    appendChildren(modifers, [remove, create]);
+    appendChildren(header, [heading, modifers])
 
     // Populate list 
     for (let i = 0; i < list.items; i++) {

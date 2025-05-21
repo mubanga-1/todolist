@@ -12,12 +12,26 @@
     font-family: "Open Sans", sans-serif;
 }
 
-body, .side-bar, #nav-links, #modifiers {
+body, .side-bar, #nav-links, #modifiers, #list-header,
+#item-modifiers{
     display: flex;
 }
 
 #nav-heading, #nav-links > .list {
     text-align: center;
+}
+
+.item-modifier, #modifiers > button {
+    text-align: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
+    border-radius: .57rem;
+    transition: .6s ease;
+}
+
+.item-modifier:hover , #modifiers > button:hover {
+    cursor: pointer;
 }
 
 .side-bar {
@@ -45,19 +59,12 @@ body, .side-bar, #nav-links, #modifiers {
 #modifiers > button {
     background-color: #121212;
     color: #f1f2f3;
-    text-align: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 2rem;
-    border-radius: .57rem;
     border: 1px solid #fff;
-    transition: .6s ease;
 }
 
 #modifiers > button:hover {
     background-color: #f1f2f3;
     color: #121212;
-    cursor: pointer;
 }
 
 
@@ -124,6 +131,26 @@ body, .side-bar, #nav-links, #modifiers {
     background-color: #f1f2f3;
 }
 
+#list-header {
+    flex-direction: column;
+    gap: 2rem;
+}
+
 #list-heading {
     font-size: 2rem;
+}
+
+#item-modifiers {
+    justify-content: space-between;
+}
+
+.item-modifier {
+    background-color: #f1f1f1;
+    border: 1px solid #121212;
+}
+
+.item-modifier:hover {
+    background-color: #121212;
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
 }
