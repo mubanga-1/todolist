@@ -15,6 +15,7 @@ function displayContent(list) {
     const listWrapper  = createElement({type: "ul", id: "list", classList: [], text: ""});
 
     const modifers = createElement({type: "div", id: "item-modifiers", classList: [""], text: ""});
+    modifers.dataset.name = "item-modifiers";
 
     // Creating and deleting list items
     const create = createElement({type: "button", id: "create-item", classList: ["item-modifier"], text: "+"});
