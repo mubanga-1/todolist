@@ -1,4 +1,4 @@
-export { displayContent } from "./content.js";
+export { displayContent, displayFirst } from "./content.js";
 export { generateSideBar, generateNav } from "./sidebar.js";
 export { highlight, displayElement, createList,
 deleteList, getListNames, clearElement } from "./utils.js";
