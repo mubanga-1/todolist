@@ -1,5 +1,6 @@
 // Import createElement and appendChildren function from utils.js
 import { createElement, appendChildren, clearElement, getListNames } from "./utils.js";
+import { displayFirst } from "./content.js";
 
 // Used to generate navigation links
 function generateNav() {
@@ -7,12 +8,16 @@ function generateNav() {
     const navLinks = document.querySelector("#nav-links");
     clearElement(navLinks);
 
+    const listNames = [];
+
     for (let list of lists) {
         const newListButton = createElement({type: "div", id: "", classList: ["list"], text: `${list}`});
-        newListButton.dataset.name = "list";
+        newListButton.dataset.name = list;
         navLinks.appendChild(newListButton);
-
+        listNames.push(list);
     }
+
+    displayFirst(listNames);
 
 }
 
