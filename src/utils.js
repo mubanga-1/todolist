@@ -41,14 +41,37 @@ function displayElement(element, flag="i") {
 
 // Creates a new List and stores it in the lists object in local storage
 function createList(name) {
-    localStorage.setItem(`lists.${name}`, JSON.stringify({name, items: []}));
+    const lists = JSON.parse(localStorage.getItem("lists"));
+    lists[name] = {name, items: []};
+
+    localStorage.setItem("lists", JSON.stringify(lists));
 }
 
 // Deletes a list from local storage
 function deleteList(name) {
-    localStorage.removeItem(`lists.${name}`);
+    const lists = JSON.parse(localStorage.getItem("lists"));
+    const newState = {};
+
+    for (let list in lists) {
+        if (name !== list) {
+            newState[list] = lists[list];
+        }    
+    }
+
+    localStorage.setItem("lists", JSON.stringify(newState));
+}
+
+function getListNames() {
+    const names = [];
+    const lists = JSON.parse(localStorage.getItem("lists"));
+    
+    for (let list in lists) {
+        names.push(list);
+    }
+
+    return names
 }
 
 
 export { createElement, appendChildren, highlight
-, displayElement, createList, deleteList };
+, displayElement, createList, deleteList, getListNames };
