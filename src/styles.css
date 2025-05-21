@@ -118,6 +118,12 @@ body, .side-bar, #nav-links, #modifiers {
 }
 
 .main-content {
+    color: #121212;
+    padding: 6.25rem;
     width: 80%;
     background-color: #f1f2f3;
+}
+
+#list-heading {
+    font-size: 2rem;
 }
