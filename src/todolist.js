@@ -64,3 +64,5 @@ class Item {
         }
     }
 }
+
+export { Todolist, Item };
