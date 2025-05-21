@@ -31,9 +31,9 @@ function highlight(element, flag="r") {
 }
 
 // Used to display or hide a given element
-function displayElement(element, flag="i") {
+function displayElement(element, flag="i", method="block") {
     if (flag === "v") {
-        element.style.display = "block";
+        element.style.display = method;
     } else {
         element.style.display = "none";
     }
