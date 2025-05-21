@@ -3,7 +3,8 @@ import "./styles.css";
 
 // Import relays from exports
 import { highlight, displayElement, 
-createList, deleteList, getListNames, generateNav , Todolist } from "./exports.js";
+createList, deleteList, getListNames, 
+generateNav , displayContent, displayFirst } from "./exports.js";
 
 // Add lists array for containing todolist objects to local storage if not already there 
 const listsContainer = "lists";
@@ -85,11 +86,12 @@ submitBtn.addEventListener("click", () => {
 });
 
 // Get elements that contain list names
-const listElements = document.querySelectorAll("[data-name='list']");
+const listElements = document.querySelectorAll(".list");
 
 // Functionality for visually toggling between list options
 document.querySelector("[data-name='nav-link-wrapper']").addEventListener("click", (event) => {
     let target = event.target;
+    const lists = JSON.parse(localStorage.getItem("lists"));
 
     // Highlight target and unhighlight previous target
     for (let i = 0; i < listElements.length; i++) {
@@ -97,6 +99,7 @@ document.querySelector("[data-name='nav-link-wrapper']").addEventListener("click
 
         if (target === currentList) {
             highlight(currentList, "h");
+            displayContent(lists[`${target.innerText}`]);
 
         } else {
             highlight(currentList);
