@@ -74,7 +74,10 @@ function getListNames() {
 
 // Use for clearing an element of all it's children
 function clearElement(element) {
-    const children = document.querySelectorAll(`#${element.id} > *`);
+    let selector;
+    element.id ? selector = "#" + element.id : selector = "." + element.className;
+
+    const children = document.querySelectorAll(`${selector} > *`);
     children.forEach(child => {
         element.removeChild(child);
     });
