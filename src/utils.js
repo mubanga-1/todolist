@@ -1,3 +1,4 @@
+// Creates a new Element with greater ease
 function createElement(elementObject) {
     let newElement;
     if (elementObject.type) {
@@ -11,14 +12,14 @@ function createElement(elementObject) {
     return newElement;
 }
 
-
+// Appends multiple children to an element
 function appendChildren(element, children) {
     children.forEach(child => {
         element.appendChild(child);
     });
 }
 
-
+// Used to visually highlight or unhighlight element by modification of its color properties
 function highlight(element, flag="r") {
     if (flag === "h"){
         element.style.backgroundColor = "#fff";
@@ -29,6 +30,7 @@ function highlight(element, flag="r") {
     }
 }
 
+// Used to display or hide a given element
 function displayElement(element, flag="i") {
     if (flag === "v") {
         element.style.display = "block";
@@ -37,4 +39,16 @@ function displayElement(element, flag="i") {
     }
 }
 
-export { createElement, appendChildren, highlight, displayElement };
+// Creates a new List and stores it in the lists object in local storage
+function createList(name) {
+    localStorage.setItem(`lists.${name}`, JSON.stringify({name, items: []}));
+}
+
+// Deletes a list from local storage
+function deleteList(name) {
+    localStorage.removeItem(`lists.${name}`);
+}
+
+
+export { createElement, appendChildren, highlight
+, displayElement, createList, deleteList };
