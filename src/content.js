@@ -1,4 +1,4 @@
-import { createElement, appendChildren } from "./utils.js";
+import { createElement, appendChildren, clearElement } from "./utils.js";
 
 
 function displayAddForm(list) {
@@ -10,6 +10,8 @@ function displayAddForm(list) {
 function displayContent(list) {
     // Get content container
     const contentContainer = document.querySelector("[data-name='page-content']");
+
+    clearElement(contentContainer);
 
     // Create header and list elements 
     const header = createElement({type: "div", id: "list-heading", classList: [], text: `${list.title}`});
