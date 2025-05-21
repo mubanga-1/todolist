@@ -29,5 +29,12 @@ function highlight(element, flag="r") {
     }
 }
 
+function displayElement(element, flag="i") {
+    if (flag === "v") {
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+}
 
-export { createElement, appendChildren, highlight };
+export { createElement, appendChildren, highlight, displayElement };
