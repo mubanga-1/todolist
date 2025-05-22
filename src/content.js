@@ -90,7 +90,9 @@ function displayAddForm(list) {
     const titleElement = createElement({type: "input", id: "title-input", classList: [], text: ""});
     titleElement.dataset.name = "title";
     
-    const descriptionElement = createElement({type: "textarea", id: "description-text", classList: [], text: ""})
+    const descriptionElement = createElement({type: "textarea", id: "description-text", classList: [], text: ""});
+    descriptionElement.cols = "30";
+    descriptionElement.rows = "10";
     descriptionElement.dataset.name = "description";
 
     const dueDateElement = createElement({type: "input", id: "due-date-input", classList: [], text: ""});
@@ -98,6 +100,9 @@ function displayAddForm(list) {
     dueDateElement.dataset.name = "due-date";
 
     const priorityElement = createElement({type: "input", id: "priority-input", classList: [], text: ""});
+    priorityElement.type = "number";
+    priorityElement.min = "1";
+    priorityElement.max = "3";
     priorityElement.dataset.name = "priority";
 
     // Create form elements objects further processing of contents
@@ -119,7 +124,7 @@ function displayAddForm(list) {
         if (element !== "dueDate") {
             label = createElement({type: "label", id: "", classList: [], text: `${element}:`});
         } else {
-            label = createElement({type: "label", id: "", classlist: [], text: "due date"});
+            label = createElement({type: "label", id: "", classlist: [], text: "due date:"});
         } 
         label.for = `${element.id}`;
 
@@ -141,4 +146,4 @@ function displayAddForm(list) {
 }
 
 
-export { displayContent, displayFirst, displayAddForm };
+export { displayContent, displayFirst };

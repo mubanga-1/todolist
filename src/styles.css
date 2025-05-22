@@ -13,8 +13,12 @@
 }
 
 body, .side-bar, #nav-links, #modifiers, #list-header,
-#item-modifiers{
+#item-modifiers, form {
     display: flex;
+}
+
+.side-bar, #list-header, form {
+    flex-direction: column;
 }
 
 #nav-heading, #nav-links > .list {
@@ -35,7 +39,6 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
 }
 
 .side-bar {
-    flex-direction: column;
     gap: 3rem;
     width: 20%;
     height: 100vh;
@@ -132,7 +135,6 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
 }
 
 #list-header {
-    flex-direction: column;
     gap: 2rem;
 }
 
@@ -153,4 +155,33 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
     background-color: #121212;
     color: #f1f1f1;
     border: 1px solid #f1f1f1;
+}
+
+form {
+    margin-top: 2.4rem;
+    gap: .8rem;
+}
+
+form, form button {
+    font-size: 1.35rem;    
+    text-transform: capitalize;
+}
+
+#title-input, #description-text, 
+#due-date-input, #priority-input{
+    padding: .15rem;
+    font-size: 1.15rem;    
+}
+
+#add-btn {
+    width: 6.25rem;
+    border: none;
+    background-color: #4af113;
+    border-radius: .25rem;
+    transition: .7s ease;
+}
+
+#add-btn:hover {
+    cursor: pointer;
+    background-color: #1aff4c91;
 }
