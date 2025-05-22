@@ -69,6 +69,17 @@ function displayFirst(names) {
     displayContent(lists[names[0]]);
 }
 
+function logInfo (event) {
+    event.preventDefault();
+
+    const titleInfo = document.querySelector("[data-name='title']").value;
+    const descriptionInfo = document.querySelector("[data-name='description']").value;
+    const dueDateInfo = document.querySelector("[data-name='due-date']").value;
+    const priorityInfo = document.querySelector("[data-name='priority']").value;
+
+    console.log([titleInfo, descriptionInfo, dueDateInfo, priorityInfo]);
+}
+
 
 function displayAddForm(list) {
     // Get content container and clear it of all contents
@@ -139,6 +150,7 @@ function displayAddForm(list) {
     const addBtn = createElement({type: "button", id: "add-btn", classlist: [], text: "add"});
     addBtn.dataset.name = "add-button";
 
+    addBtn.addEventListener("click", logInfo);
     finalFormElements.push(addBtn);
 
     appendChildren(createForm, finalFormElements)

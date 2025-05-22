@@ -1,11 +1,32 @@
 // Import createElement and appendChildren function from utils.js
-import { createElement, appendChildren, clearElement, getListNames } from "./utils.js";
-import { displayFirst } from "./content.js";
+import { createElement, appendChildren, clearElement, getListNames, highlight } from "./utils.js";
+import { displayContent, displayFirst } from "./content.js";
+
+function switchTab(event) {
+    // Get elements that contain list names
+    const listElements = document.querySelectorAll(".list");
+
+    let target = event.target;
+    const lists = JSON.parse(localStorage.getItem("lists"));
+
+    // Highlight target and unhighlight previous target
+    for (let i = 0; i < listElements.length; i++) {
+        let currentList = listElements[i];
+
+        if (target === currentList) {
+            highlight(currentList, "h");
+            displayContent(lists[`${target.innerText}`]);
+
+        } else {
+            highlight(currentList);
+        }
+    }
+}
 
 // Used to generate navigation links
 function generateNav() {
     const lists = getListNames();
-    const navLinks = document.querySelector("#nav-links");
+    const navLinks = document.querySelector("[data-name='nav-link-wrapper']");
     clearElement(navLinks);
 
     const listNames = [];
@@ -17,6 +38,8 @@ function generateNav() {
         listNames.push(list);
     }
 
+    // Functionality for visually toggling between list options
+    navLinks.addEventListener("click", switchTab);
     displayFirst(listNames);
 
 }

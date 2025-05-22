@@ -84,25 +84,3 @@ submitBtn.addEventListener("click", () => {
         window.alert("Enter list name!")
     )
 });
-
-// Get elements that contain list names
-const listElements = document.querySelectorAll(".list");
-
-// Functionality for visually toggling between list options
-document.querySelector("[data-name='nav-link-wrapper']").addEventListener("click", (event) => {
-    let target = event.target;
-    const lists = JSON.parse(localStorage.getItem("lists"));
-
-    // Highlight target and unhighlight previous target
-    for (let i = 0; i < listElements.length; i++) {
-        let currentList = listElements[i];
-
-        if (target === currentList) {
-            highlight(currentList, "h");
-            displayContent(lists[`${target.innerText}`]);
-
-        } else {
-            highlight(currentList);
-        }
-    }
-});
