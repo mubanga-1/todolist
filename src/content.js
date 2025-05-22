@@ -45,10 +45,6 @@ function displayFirst(names) {
 
 
 function displayAddForm(list) {
-    // Get collection of lists from local storage
-    const lists = JSON.parse(localStorage.getItem("lists"));
-    const selectedList = lists[list];
-
     // Get content container and clear it of all contents
     const contentContainer = document.querySelector("[data-name='page-content']");
     clearElement(contentContainer);
@@ -57,7 +53,7 @@ function displayAddForm(list) {
     const header = createElement({type: "div", id: "create-header", classList: [], text: ""});
 
     // Create heading for todolist creation page
-    const heading = createElement({type: "li", id: "list-item", classList: ["list-heading"], text: "Create an item"});
+    const heading = createElement({type: "div", id: "list-item", classList: ["list-heading"], text: `Add item to ${list}`});
     header.appendChild(heading);
 
     // Create form for collection of data for making list item
@@ -65,16 +61,56 @@ function displayAddForm(list) {
     createForm.autocomplele = "off";
 
     // Create elements for form fields
-    const titleElement = createElement({type: "input", id: "", classList: [], text: ""});
+    const titleElement = createElement({type: "input", id: "title-input", classList: [], text: ""});
+    titleElement.dataset.name = "title";
     
-    const descriptionElement = createElement({type: "textarea", id: "", classList: [], text: ""})
+    const descriptionElement = createElement({type: "textarea", id: "description-text", classList: [], text: ""})
+    descriptionElement.dataset.name = "description";
 
-    const dueDateElement = createElement({type: "input", id: "", classList: [], text: ""});
+    const dueDateElement = createElement({type: "input", id: "due-date-input", classList: [], text: ""});
     dueDateElement.type = "date";
+    dueDateElement.dataset.name = "due-date";
 
-    const priority = createElement({type: "input", id: "", classList: [], text: ""});
+    const priorityElement = createElement({type: "input", id: "priority-input", classList: [], text: ""});
+    priorityElement.dataset.name = "priority";
 
-    appendChildren(createForm, [titleElement, descriptionElement, dueDateElement, priority])
+    // Create form elements objects further processing of contents
+    const formElements = {
+        title: titleElement,
+        description: descriptionElement,
+        dueDate: dueDateElement,
+        priority: priorityElement,
+    }
+
+    // Create array to store final form of form elements when fully processed
+    const finalFormElements = [];
+
+    // For each element in form elements object add it to a label and add the label to a wrapper
+    for (let element in formElements) {
+        const wrapper = createElement({type: "div", id: "", classList: ["input-wrapper"], text: ""});
+
+        let label;
+        if (element !== "dueDate") {
+            label = createElement({type: "label", id: "", classList: [], text: `${element}:`});
+        } else {
+            label = createElement({type: "label", id: "", classlist: [], text: "due date"});
+        } 
+        label.for = `${element.id}`;
+
+        label.appendChild(formElements[element]);
+        wrapper.appendChild(label);
+
+        finalFormElements.push(wrapper);
+
+    }
+
+    // Create button to click and "submit" the data
+    const addBtn = createElement({type: "button", id: "add-btn", classlist: [], text: "add"});
+    addBtn.dataset.name = "add-button";
+
+    finalFormElements.push(addBtn);
+
+    appendChildren(createForm, finalFormElements)
     appendChildren(contentContainer, [header, createForm]);
 }
 
