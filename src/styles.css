@@ -136,7 +136,7 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
     gap: 2rem;
 }
 
-#list-heading {
+.list-heading {
     font-size: 2rem;
 }
 

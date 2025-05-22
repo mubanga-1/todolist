@@ -10,7 +10,7 @@ function displayContent(list) {
 
     // Create header and list elements 
     const header = createElement({type: "div", id: "list-header", classList: [], text: ""});
-    const heading = createElement({type: "div", id: "list-heading", classList: [], text: `${list.name}`});
+    const heading = createElement({type: "div", id: "", classList: ["list-heading"], text: `${list.name}`});
 
     const listWrapper  = createElement({type: "ul", id: "list", classList: [], text: ""});
 
@@ -45,8 +45,38 @@ function displayFirst(names) {
 
 
 function displayAddForm(list) {
+    // Get collection of lists from local storage
+    const lists = JSON.parse(localStorage.getItem("lists"));
+    const selectedList = lists[list];
 
+    // Get content container and clear it of all contents
+    const contentContainer = document.querySelector("[data-name='page-content']");
+    clearElement(contentContainer);
+
+    // Create header for containing heading 
+    const header = createElement({type: "div", id: "create-header", classList: [], text: ""});
+
+    // Create heading for todolist creation page
+    const heading = createElement({type: "li", id: "list-item", classList: ["list-heading"], text: "Create an item"});
+    header.appendChild(heading);
+
+    // Create form for collection of data for making list item
+    const createForm = createElement({type: "form", id: "", classList: [], text: ""});
+    createForm.autocomplele = "off";
+
+    // Create elements for form fields
+    const titleElement = createElement({type: "input", id: "", classList: [], text: ""});
+    
+    const descriptionElement = createElement({type: "textarea", id: "", classList: [], text: ""})
+
+    const dueDateElement = createElement({type: "input", id: "", classList: [], text: ""});
+    dueDateElement.type = "date";
+
+    const priority = createElement({type: "input", id: "", classList: [], text: ""});
+
+    appendChildren(createForm, [titleElement, descriptionElement, dueDateElement, priority])
+    appendChildren(contentContainer, [header, createForm]);
 }
 
 
-export { displayContent, displayFirst };
+export { displayContent, displayFirst, displayAddForm };
