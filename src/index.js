@@ -2,9 +2,12 @@
 import "./styles.css";
 
 // Import relays from exports
-import { highlight, displayElement, 
+import { displayElement, 
 createList, deleteList, getListNames, 
-generateNav , displayContent  } from "./exports.js";
+generateNav, generateSideBar} from "./exports.js";
+
+// Run function that adds all of the elements of the sidebar onto the page
+generateSideBar();
 
 // Add lists array for containing todolist objects to local storage if not already there 
 const listsContainer = "lists";

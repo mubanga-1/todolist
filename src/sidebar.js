@@ -1,7 +1,9 @@
-// Import createElement and appendChildren function from utils.js
-import { createElement, appendChildren, clearElement, getListNames, highlight } from "./utils.js";
-import { displayContent, displayFirst } from "./content.js";
+// Import necessary function relays from exports
+import { createElement, appendChildren, clearElement,
+getListNames, highlight, displayContent, displayFirst } from "./exports.js";
 
+
+// Contains functionality for switching between todolists when one is clicked on
 function switchTab(event) {
     // Get elements that contain list names
     const listElements = document.querySelectorAll(".list");
@@ -87,7 +89,5 @@ function generateSideBar() {
 
     generateNav();
 }
-
-generateSideBar();
 
 export { generateSideBar, generateNav };

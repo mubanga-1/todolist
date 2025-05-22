@@ -1,4 +1,5 @@
-import { createElement, appendChildren, clearElement, highlight } from "./utils.js";
+// Import necessary function relays from exports
+import { createElement, appendChildren, clearElement, highlight } from "./exports.js";
 
 // Checks if on the list item modifiers is clicked
 function modify(event)  {
