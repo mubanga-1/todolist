@@ -4,7 +4,7 @@ import "./styles.css";
 // Import relays from exports
 import { highlight, displayElement, 
 createList, deleteList, getListNames, 
-generateNav , displayContent, displayAddForm } from "./exports.js";
+generateNav , displayContent  } from "./exports.js";
 
 // Add lists array for containing todolist objects to local storage if not already there 
 const listsContainer = "lists";
@@ -105,28 +105,4 @@ document.querySelector("[data-name='nav-link-wrapper']").addEventListener("click
             highlight(currentList);
         }
     }
-});
-
-// Checks if on the list item modifiers is clicked
-document.querySelector("[data-name='item-modifiers']").addEventListener("click", (event) => {
-    const target = event.target;
-
-    // Get ids of the modifiers
-    const modifierElements = document.querySelectorAll(".item-modifier");
-    const validIds = [];
-
-    // Add each id to validIds array
-    modifierElements.forEach(modifier => {
-        validIds.push(modifier.id);
-    });
-
-    // Perform operation based off of the id
-    if (validIds.includes(target.id)) {
-        if (target.id === "create-item") {
-            displayAddForm(document.querySelector(".list-heading").innerText);
-        } else {
-
-        }
-    } 
-
 });

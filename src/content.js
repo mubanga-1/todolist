@@ -1,5 +1,29 @@
 import { createElement, appendChildren, clearElement, highlight } from "./utils.js";
 
+// Checks if on the list item modifiers is clicked
+function modify(event)  {
+    const target = event.target;
+
+    // Get ids of the modifiers
+    const modifierElements = document.querySelectorAll(".item-modifier");
+    const validIds = [];
+
+    // Add each id to validIds array
+    modifierElements.forEach(modifier => {
+        validIds.push(modifier.id);
+    });
+
+    // Perform operation based off of the id
+    if (validIds.includes(target.id)) {
+        if (target.id === "create-item") {
+            displayAddForm(document.querySelector(".list-heading").innerText);
+        } else {
+
+        }
+    } 
+
+}
+
 
 // For displaying the contents of a specific todolist
 function displayContent(list) {
@@ -16,6 +40,8 @@ function displayContent(list) {
 
     const modifers = createElement({type: "div", id: "item-modifiers", classList: [""], text: ""});
     modifers.dataset.name = "item-modifiers";
+
+    modifers.addEventListener("click", modify);
 
     // Creating and deleting list items
     const create = createElement({type: "button", id: "create-item", classList: ["item-modifier"], text: "+"});
