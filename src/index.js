@@ -106,3 +106,23 @@ document.querySelector("[data-name='nav-link-wrapper']").addEventListener("click
         }
     }
 });
+
+// Checks if on the list item modifiers is clicked
+document.querySelector("[data-name='item-modifiers']").addEventListener("click", (event) => {
+    const target = event.target;
+    
+    // Get ids of the modifiers
+    const modifierElements = document.querySelectorAll(".item-modifier");
+    const validIds = [];
+
+    // Add each id to validIds array
+    modifierElements.forEach(modifier => {
+        validIds.push(modifier.id);
+    });
+
+    // Perform operation based off of the id
+    if (validIds.includes(target.id)) {
+    
+    } 
+
+});
