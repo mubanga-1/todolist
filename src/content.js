@@ -26,6 +26,22 @@ function modify(event)  {
 
 }
 
+// Converts given list items from local storage to an Item object
+function convertItems(list) {
+    const convertedItems = [];
+    for (let i = 0; i < list.length; i++) {
+        const {_title, _description, _dueDate, _priority} = list[i];
+        convertedItems.push(new Item(_title, _description, _dueDate, _priority));
+    }
+
+    return convertedItems;
+}
+
+
+function displayInfo(event) {
+    const target = event.target;
+}
+
 
 // For displaying the contents of a specific todolist
 function displayContent(list) {
@@ -37,10 +53,13 @@ function displayContent(list) {
     const header = createElement({type: "div", id: "list-header", classList: [], text: ""});
     const heading = createElement({type: "div", id: "", classList: ["list-heading"], text: `${list.name}`});
     const listWrapper  = createElement({type: "ul", id: "list", classList: [], text: ""});
-    
+
+    listWrapper.addEventListener("click", displayInfo);
+    list.items = convertItems(list.items);
+
     // Add list items to listWrapper
     list.items.forEach(item => {
-        const listItem = createElement({type: "li", id: "", classList: ["list-item"], text: `${item._title}`});
+        const listItem = createElement({type: "li", id: `${item.priority}`, classList: ["list-item"], text: `${item.title}`});
         listWrapper.appendChild(listItem);    
     });
 
@@ -70,19 +89,6 @@ function displayFirst(names) {
     if (firstName) displayContent(firstName);
 
 }
-
-
-// Converts given list items from local storage to an Item object
-function convertItems(list) {
-    const convertedItems = [];
-    for (let i = 0; i < list.length; i++) {
-        const {_title, _description, _dueDate, _priority} = list[i];
-        convertedItems.push(new Item(_title, _description, _dueDate, _priority));
-    }
-
-    return convertedItems;
-}
-
 
 // Used to add a new List item 
 function addItem(list, properites) {
@@ -165,7 +171,6 @@ function displayAddForm(list) {
     const priorityElement = createElement({type: "input", id: "priority-input", classList: [], text: ""});
     priorityElement.type = "number";
     priorityElement.min = "1";
-    priorityElement.max = "3";
     priorityElement.dataset.name = "priority";
 
     // Create form elements objects further processing of contents
