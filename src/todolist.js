@@ -59,8 +59,28 @@ class Item {
     }
 
     set description(description) {
-        if (description.length > 2) {
+        if (description.length >= 100) {
             this._description = description;
+        }
+    }
+
+    get dueDate() {
+        return this._dueDate;
+    }
+
+    set dueDate(dueDate) {
+        if (dueDate) {
+            this._dueDate = new Date(dueDate);
+        }
+    }
+
+    get priority() {
+        return this._priority; 
+    }
+
+    set priority(priority) {
+        if (priority >= 1 && priority <= 3) {
+            this._priority = priority;
         }
     }
 }
