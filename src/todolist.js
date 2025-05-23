@@ -21,7 +21,7 @@ class Todolist {
         });
 
         if (titles.includes(newItem.title.toLowerCase())) {
-            throw Error("Item already exists!");
+            throw Error("That item already exists");
         }
 
         this.items.push(newItem);
@@ -59,7 +59,7 @@ class Item {
     }
 
     set description(description) {
-        if (description.length >= 100) {
+        if (description.length >= 1) {
             this._description = description;
         }
     }
