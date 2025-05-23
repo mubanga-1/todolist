@@ -16,14 +16,21 @@ class Todolist {
 
     addItem(newItem) {
         const titles = [];
+        const priorityNums = [];
+        
         this.items.forEach(item => {
             titles.push(item.title.toLowerCase());
+            priorityNums.push(item.priority);
         });
 
+        
         if (titles.includes(newItem.title.toLowerCase())) {
             throw Error("That item already exists");
-        }
-
+        } 
+        else if (priorityNums.includes(newItem.priority)) {
+            throw Error("Item with that priority number already exists");
+        }        
+        
         this.items.push(newItem);
     }
 
