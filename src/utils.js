@@ -24,9 +24,13 @@ function highlight(element, flag="r") {
     if (flag === "h"){
         element.style.backgroundColor = "#fff";
         element.style.color = "#000";
+
+        element.classList += " highlighted";
     } else {
         element.style.backgroundColor = "";
         element.style.color = "";
+
+        element.classList += " unhighlighted";
     }
 }
 
