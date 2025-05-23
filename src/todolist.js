@@ -79,7 +79,7 @@ class Item {
     }
 
     set priority(priority) {
-        if (priority >= 1 && priority <= 3) {
+        if (typeof priority === "number") {
             this._priority = priority;
         }
     }
