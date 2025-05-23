@@ -1,5 +1,6 @@
 // Import necessary function relays from exports
-import { createElement, appendChildren, clearElement, highlight } from "./exports.js";
+import { createElement, appendChildren, clearElement,
+highlight, Todolist, Item } from "./exports.js";
 
 // Checks if on the list item modifiers is clicked
 function modify(event)  {
@@ -65,12 +66,47 @@ function displayContent(list) {
 // Displays the items of the first todolist saved in local storage
 function displayFirst(names) {
     const lists = JSON.parse(localStorage.getItem("lists"));
+    let firstList = document.querySelector(`[data-name='${names[0]}']`);
+    let firstName = lists[names[0]];
 
-    highlight(document.querySelector(`[data-name='${names[0]}']`), "h");   
-    displayContent(lists[names[0]]);
+    if (firstList) highlight(firstList, "h");
+    if (firstName) displayContent(firstName);
+
 }
 
-function logInfo (event) {
+// Used to add a new List item 
+function addItem(list, properites) {
+    // Extract information from properites
+    const [title, description, dueDate, priority] = properites;
+
+    // Create new item with extracted information
+    const item = new Item(title, description, dueDate, priority);
+
+    // Get selected from local storage
+    const lists = JSON.parse(localStorage.getItem("lists"));
+    const selectedList = lists[list];
+
+    // Create Todolist object and add item to it
+    const toDoTemplate = new Todolist(list);
+    toDoTemplate.items.concat(selectedList.items);
+    
+    try {
+        toDoTemplate.addItem(item);
+
+    } catch (err) {
+        alert(`${err} in ${list}`);
+    
+    }
+    
+    const newListState = {name: toDoTemplate.name, items: toDoTemplate.items};
+    lists[list] = newListState;
+    
+    localStorage.setItem("lists", JSON.stringify(lists));
+}
+
+
+// Used to get the information from the add item page if all is filled out
+function getItemInfo (event) {
     event.preventDefault();
 
     const titleInfo = document.querySelector("[data-name='title']").value;
@@ -78,7 +114,12 @@ function logInfo (event) {
     const dueDateInfo = document.querySelector("[data-name='due-date']").value;
     const priorityInfo = document.querySelector("[data-name='priority']").value;
 
-    console.log([titleInfo, descriptionInfo, dueDateInfo, priorityInfo]);
+    const listName = document.querySelector(".highlighted").innerText;
+    const info = [titleInfo, descriptionInfo, dueDateInfo, priorityInfo];
+
+    if (titleInfo && descriptionInfo && dueDateInfo && priorityInfo) {
+        addItem(listName, info);
+    }
 }
 
 
@@ -151,7 +192,7 @@ function displayAddForm(list) {
     const addBtn = createElement({type: "button", id: "add-btn", classlist: [], text: "add"});
     addBtn.dataset.name = "add-button";
 
-    addBtn.addEventListener("click", logInfo);
+    addBtn.addEventListener("click", getItemInfo);
     finalFormElements.push(addBtn);
 
     appendChildren(createForm, finalFormElements)
