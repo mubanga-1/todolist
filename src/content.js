@@ -31,14 +31,18 @@ function modify(event)  {
 function displayContent(list) {
     // Get content container
     const contentContainer = document.querySelector("[data-name='page-content']");
-
     clearElement(contentContainer);
 
     // Create header and list elements 
     const header = createElement({type: "div", id: "list-header", classList: [], text: ""});
     const heading = createElement({type: "div", id: "", classList: ["list-heading"], text: `${list.name}`});
-
     const listWrapper  = createElement({type: "ul", id: "list", classList: [], text: ""});
+    
+    // Add list items to listWrapper
+    list.items.forEach(item => {
+        const listItem = createElement({type: "li", id: "", classList: ["list-item"], text: `${item._title}`});
+        listWrapper.appendChild(listItem);    
+    });
 
     const modifers = createElement({type: "div", id: "item-modifiers", classList: [""], text: ""});
     modifers.dataset.name = "item-modifiers";
@@ -50,15 +54,7 @@ function displayContent(list) {
     const remove = createElement({type: "button", id: "remove-item", classList: ["item-modifier"], text: "-"});
 
     appendChildren(modifers, [remove, create]);
-    appendChildren(header, [heading, modifers])
-
-    // Populate list 
-    for (let i = 0; i < list.items; i++) {
-        const listItem = createElement({type: "li", id: "list-item", classList: [], text: `${list.items[i]}`});
-        listWrapper.appendChild(listItem);
-    }
-
-
+    appendChildren(header, [heading, modifers]);
     appendChildren(contentContainer, [header, listWrapper]);
 
 }
@@ -67,34 +63,46 @@ function displayContent(list) {
 function displayFirst(names) {
     const lists = JSON.parse(localStorage.getItem("lists"));
     let firstList = document.querySelector(`[data-name='${names[0]}']`);
-    let firstName = lists[names[0]];
+    let firstName;
 
+    if (names.length > 0) firstName = lists[names[0]];
     if (firstList) highlight(firstList, "h");
     if (firstName) displayContent(firstName);
 
 }
 
+
+// Converts given list items from local storage to an Item object
+function convertItems(list) {
+    const convertedItems = [];
+    for (let i = 0; i < list.length; i++) {
+        const {_title, _description, _dueDate, _priority} = list[i];
+        convertedItems.push(new Item(_title, _description, _dueDate, _priority));
+    }
+
+    return convertedItems;
+}
+
+
 // Used to add a new List item 
 function addItem(list, properites) {
-    // Extract information from properites
-    const [title, description, dueDate, priority] = properites;
-
-    // Create new item with extracted information
-    const item = new Item(title, description, dueDate, priority);
-
-    // Get selected from local storage
+    // Get selected list's items from local storage
     const lists = JSON.parse(localStorage.getItem("lists"));
-    const selectedList = lists[list];
+    const selectedListItems = convertItems(lists[list].items);
 
     // Create Todolist object and add item to it
     const toDoTemplate = new Todolist(list);
-    toDoTemplate.items.concat(selectedList.items);
-    
+    toDoTemplate.items = toDoTemplate.items.concat(selectedListItems);
+
+    // Extract information from properites
+    const [title, description, dueDate, priority] = properites;
+
     try {
-        toDoTemplate.addItem(item);
+        // Create new item with extracted information
+        toDoTemplate.addItem(new Item(title, description, dueDate, priority));
 
     } catch (err) {
-        alert(`${err} in ${list}`);
+        alert(`${err} in ${list}!`);
     
     }
     
@@ -120,6 +128,8 @@ function getItemInfo (event) {
     if (titleInfo && descriptionInfo && dueDateInfo && priorityInfo) {
         addItem(listName, info);
     }
+      
+    displayContent(JSON.parse(localStorage.getItem("lists"))[listName]);
 }
 
 
