@@ -73,7 +73,7 @@ function getListNames() {
         names.push(list);
     }
 
-    return names
+    return names;
 }
 
 // Use for clearing an element of all it's children
