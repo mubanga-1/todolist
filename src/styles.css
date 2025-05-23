@@ -12,12 +12,15 @@
     font-family: "Open Sans", sans-serif;
 }
 
-body, .side-bar, #nav-links, #modifiers, #list-header,
-#item-modifiers, form {
+/* Common styles */
+
+body, .side-bar, .main-content, #nav-links, #modifiers, #list-header,
+#item-modifiers, form, #list {
     display: flex;
 }
 
-.side-bar, #list-header, form {
+.side-bar, #list-header,
+ form, #list, .main-content {
     flex-direction: column;
 }
 
@@ -37,6 +40,8 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
 .item-modifier:hover , #modifiers > button:hover {
     cursor: pointer;
 }
+
+/* Sidebar styles */
 
 .side-bar {
     gap: 3rem;
@@ -127,7 +132,10 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
     border-bottom: .125rem solid #f1f2f3;
 }
 
+/* Main content styles */
+
 .main-content {
+    gap: 3.5rem;
     color: #121212;
     padding: 6.25rem;
     width: 80%;
@@ -157,6 +165,8 @@ body, .side-bar, #nav-links, #modifiers, #list-header,
     border: 1px solid #f1f1f1;
 }
 
+/* Item Addition Form Styles */
+
 form {
     margin-top: 2.4rem;
     gap: .8rem;
@@ -184,4 +194,28 @@ form, form button {
 #add-btn:hover {
     cursor: pointer;
     background-color: #1aff4c91;
+}
+
+/* List item styles */
+
+#list {
+    gap: .8rem;
+    list-style-type: none;
+}
+
+#list > .list-item {
+    color: #fff;
+    background-color: #121212;
+    padding: .8rem;
+    border-radius: .4rem;
+    transition: .5s ease;
+}
+
+#list > .list-item:nth-of-type(odd) {
+    background-color: #112233;
+}
+
+#list > .list-item:hover {
+    cursor: pointer;
+    opacity: .8;
 }
