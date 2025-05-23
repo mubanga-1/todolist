@@ -46,11 +46,11 @@ body, .side-bar, .main-content, #nav-links, #modifiers, #list-header,
 .side-bar {
     gap: 3rem;
     width: 20%;
-    height: 100vh;
     background-color: #121212;
     color: #f1f2f3;
     padding: 2rem;
     font-size: 1.3rem;
+    overflow-y: scroll;
 }
 
 #nav-heading {
