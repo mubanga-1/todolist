@@ -37,53 +37,6 @@ function convertItems(list) {
     return convertedItems;
 }
 
-// Used to expand a list item
-
-const resizeElement = (function () {
-    let id = null;
-    clearInterval(id);
-
-    function expandContent (item, height) {
-
-        const grow = () => {
-            const maxHeight = 250;
-
-            if (height === maxHeight) {
-                clearInterval(id);
-            } else {
-                height += 200;
-                item.style.height = `${height}px`;
-            }
-        }
-        grow();
-
-        id = setInterval(grow, 1000);
-        item.classList.value += " resized";
-    }
-
-    function reduceContent (item, height) {
-
-        const shrink = () => {
-
-            if (height === 50) {
-                clearInterval(id);
-            } else {
-                height -= 200;
-                item.style.height = `${height}px`;
-            }
-        }
-        shrink();
-
-        id = setInterval(shrink, 1000);
-
-        const classList = item.classList.value.split(" ");
-        item.classList.value = classList.filter(item => item !== "resized").join("");
-    }
-
-    return { expandContent, reduceContent };
-
-})();
-
 
 // Used for showing the properties of a list item
 function displayInfo(event) {
@@ -91,17 +44,8 @@ function displayInfo(event) {
     const items = document.querySelectorAll("[data-name='item']");
 
     for (let i = 0; i < items.length; i++) {
-        const classList = items[i].classList.value.split(" ");
-        const heightValue = items[i].offsetHeight;
-
         if (items[i] === target) {
-
-            if (classList.includes("resized")) {
-                resizeElement.reduceContent(items[i], heightValue);
-
-            } else {
-                resizeElement.expandContent(items[i], heightValue);
-            }
+            
         }
     }
 }
