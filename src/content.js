@@ -38,6 +38,150 @@ function convertItems(list) {
 }
 
 
+// Used to add a new List item 
+function addItem(list, properites) {
+    // Get selected list's items from local storage
+    const lists = JSON.parse(localStorage.getItem("lists"));
+    const selectedListItems = convertItems(lists[list].items);
+
+    // Create Todolist object and add item to it
+    const toDoTemplate = new Todolist(list);
+    toDoTemplate.items = toDoTemplate.items.concat(selectedListItems);
+
+    // Extract information from properites
+    const [title, description, dueDate, priority] = properites;
+
+    try {
+        // Create new item with extracted information
+        toDoTemplate.addItem(new Item(title, description, dueDate, priority));
+
+    } catch (err) {
+        alert(`${err} in ${list}!`);
+    
+    }
+    
+    const newListState = {name: toDoTemplate.name, items: toDoTemplate.items};
+    lists[list] = newListState;
+    
+    localStorage.setItem("lists", JSON.stringify(lists));
+}
+
+
+// Used to get the information from the add item page if all is filled out
+function getItemInfo (event) {
+    event.preventDefault();
+
+    const titleInfo = document.querySelector("[data-name='title']").value;
+    const descriptionInfo = document.querySelector("[data-name='description']").value;
+    const dueDateInfo = document.querySelector("[data-name='due-date']").value;
+    const priorityInfo = parseInt(document.querySelector("[data-name='priority']").value);
+
+    const listName = document.querySelector(".highlighted").innerText;
+    const info = [titleInfo, descriptionInfo, dueDateInfo, priorityInfo];
+
+    if (titleInfo && descriptionInfo && dueDateInfo && priorityInfo) {
+        addItem(listName, info);
+    }
+      
+    displayContent(JSON.parse(localStorage.getItem("lists"))[listName]);
+    document.querySelector("[data-name='nav-bar']").style.height = `${screen.availHeight}px`;
+}
+
+
+function displayAddForm(list, mode="a", itemTitle="") {
+    // Get content container and clear it of all contents
+    const contentContainer = document.querySelector("[data-name='page-content']");
+    clearElement(contentContainer);
+
+    // Create header for containing heading 
+    const header = createElement({type: "div", id: "create-header", classList: [], text: ""});
+
+    // Declare variable to later contain header text
+    let msg;
+    mode === "a" ? msg = `Add item to ${list}` : msg = `Edit item from ${list}`;
+
+    // Create heading for todolist creation page
+    const heading = createElement({type: "div", id: "list-item", classList: ["list-heading"], text: msg});
+    header.appendChild(heading);
+    
+
+    // Create form for collection of data for making list item
+    const createForm = createElement({type: "form", id: "", classList: [], text: ""});
+    createForm.autocomplele = "off";
+
+    // Create elements for form fields
+    const titleElement = createElement({type: "input", id: "title-input", classList: [], text: ""});
+    titleElement.dataset.name = "title";
+    
+    const descriptionElement = createElement({type: "textarea", id: "description-text", classList: [], text: ""});
+    descriptionElement.cols = "30";
+    descriptionElement.rows = "10";
+    descriptionElement.dataset.name = "description";
+
+    const dueDateElement = createElement({type: "input", id: "due-date-input", classList: [], text: ""});
+    dueDateElement.type = "date";
+    dueDateElement.dataset.name = "due-date";
+
+    const priorityElement = createElement({type: "input", id: "priority-input", classList: [], text: ""});
+    priorityElement.type = "number";
+    priorityElement.min = "1";
+    priorityElement.dataset.name = "priority";
+
+    // Create form elements object for further processing of contents
+    const formElements = {
+        title: titleElement,
+        description: descriptionElement,
+        dueDate: dueDateElement,
+        priority: priorityElement,
+    }
+
+    // Create array to store final form of form elements when fully processed
+    const finalFormElements = [];
+    let editItem;
+    if (mode === "e") {
+        const listItems = convertItems((JSON.parse(localStorage.getItem("lists"))[list]).items);
+        listItems.forEach(item => {
+            if (item.title === itemTitle) editItem = item;
+        });    
+    }    
+    
+
+    // For each element in form elements object add it to a label and add the label to a wrapper
+    for (let element in formElements) {
+        formElements[element].value = editItem[element];
+
+        const wrapper = createElement({type: "div", id: "", classList: ["input-wrapper"], text: ""});
+
+        let label;
+        if (element !== "dueDate") {
+            label = createElement({type: "label", id: "", classList: [], text: `${element}:`});
+        } else {
+            label = createElement({type: "label", id: "", classlist: [], text: "due date:"});
+        } 
+        label.for = `${element.id}`;
+
+        label.appendChild(formElements[element]);
+        wrapper.appendChild(label);
+
+        finalFormElements.push(wrapper);
+
+    }
+
+    let btnType;
+    mode === "a" ? btnType = "add" : btnType = "save" 
+
+    // Create button to click and "submit" the data
+    const addBtn = createElement({type: "button", id: "add-btn", classlist: [], text: btnType});
+    addBtn.dataset.name = "add-button";
+
+    addBtn.addEventListener("click", getItemInfo);
+    finalFormElements.push(addBtn);
+
+    appendChildren(createForm, finalFormElements)
+    appendChildren(contentContainer, [header, createForm]);
+}
+
+
 // Used for showing the properties of a list item
 function displayInfo(event) {
     const target = event.target;
@@ -45,7 +189,7 @@ function displayInfo(event) {
 
     for (let i = 0; i < items.length; i++) {
         if (items[i] === target) {
-            
+            displayAddForm(document.querySelector(".highlighted").innerText, "e", target.innerText);            
         }
     }
 }
@@ -98,131 +242,5 @@ function displayFirst(names) {
     if (firstName) displayContent(firstName);
 
 }
-
-// Used to add a new List item 
-function addItem(list, properites) {
-    // Get selected list's items from local storage
-    const lists = JSON.parse(localStorage.getItem("lists"));
-    const selectedListItems = convertItems(lists[list].items);
-
-    // Create Todolist object and add item to it
-    const toDoTemplate = new Todolist(list);
-    toDoTemplate.items = toDoTemplate.items.concat(selectedListItems);
-
-    // Extract information from properites
-    const [title, description, dueDate, priority] = properites;
-
-    try {
-        // Create new item with extracted information
-        toDoTemplate.addItem(new Item(title, description, dueDate, priority));
-
-    } catch (err) {
-        alert(`${err} in ${list}!`);
-    
-    }
-    
-    const newListState = {name: toDoTemplate.name, items: toDoTemplate.items};
-    lists[list] = newListState;
-    
-    localStorage.setItem("lists", JSON.stringify(lists));
-}
-
-
-// Used to get the information from the add item page if all is filled out
-function getItemInfo (event) {
-    event.preventDefault();
-
-    const titleInfo = document.querySelector("[data-name='title']").value;
-    const descriptionInfo = document.querySelector("[data-name='description']").value;
-    const dueDateInfo = document.querySelector("[data-name='due-date']").value;
-    const priorityInfo = parseInt(document.querySelector("[data-name='priority']").value);
-
-    const listName = document.querySelector(".highlighted").innerText;
-    const info = [titleInfo, descriptionInfo, dueDateInfo, priorityInfo];
-
-    if (titleInfo && descriptionInfo && dueDateInfo && priorityInfo) {
-        addItem(listName, info);
-    }
-      
-    displayContent(JSON.parse(localStorage.getItem("lists"))[listName]);
-    document.querySelector("[data-name='nav-bar']").style.height = `${screen.availHeight}px`;
-}
-
-
-function displayAddForm(list) {
-    // Get content container and clear it of all contents
-    const contentContainer = document.querySelector("[data-name='page-content']");
-    clearElement(contentContainer);
-
-    // Create header for containing heading 
-    const header = createElement({type: "div", id: "create-header", classList: [], text: ""});
-
-    // Create heading for todolist creation page
-    const heading = createElement({type: "div", id: "list-item", classList: ["list-heading"], text: `Add item to ${list}`});
-    header.appendChild(heading);
-
-    // Create form for collection of data for making list item
-    const createForm = createElement({type: "form", id: "", classList: [], text: ""});
-    createForm.autocomplele = "off";
-
-    // Create elements for form fields
-    const titleElement = createElement({type: "input", id: "title-input", classList: [], text: ""});
-    titleElement.dataset.name = "title";
-    
-    const descriptionElement = createElement({type: "textarea", id: "description-text", classList: [], text: ""});
-    descriptionElement.cols = "30";
-    descriptionElement.rows = "10";
-    descriptionElement.dataset.name = "description";
-
-    const dueDateElement = createElement({type: "input", id: "due-date-input", classList: [], text: ""});
-    dueDateElement.type = "date";
-    dueDateElement.dataset.name = "due-date";
-
-    const priorityElement = createElement({type: "input", id: "priority-input", classList: [], text: ""});
-    priorityElement.type = "number";
-    priorityElement.min = "1";
-    priorityElement.dataset.name = "priority";
-
-    // Create form elements objects further processing of contents
-    const formElements = {
-        title: titleElement,
-        description: descriptionElement,
-        dueDate: dueDateElement,
-        priority: priorityElement,
-    }
-
-    // Create array to store final form of form elements when fully processed
-    const finalFormElements = [];
-
-    // For each element in form elements object add it to a label and add the label to a wrapper
-    for (let element in formElements) {
-        const wrapper = createElement({type: "div", id: "", classList: ["input-wrapper"], text: ""});
-
-        let label;
-        if (element !== "dueDate") {
-            label = createElement({type: "label", id: "", classList: [], text: `${element}:`});
-        } else {
-            label = createElement({type: "label", id: "", classlist: [], text: "due date:"});
-        } 
-        label.for = `${element.id}`;
-
-        label.appendChild(formElements[element]);
-        wrapper.appendChild(label);
-
-        finalFormElements.push(wrapper);
-
-    }
-
-    // Create button to click and "submit" the data
-    const addBtn = createElement({type: "button", id: "add-btn", classlist: [], text: "add"});
-    addBtn.dataset.name = "add-button";
-
-    addBtn.addEventListener("click", getItemInfo);
-    finalFormElements.push(addBtn);
-
-    appendChildren(createForm, finalFormElements)
-    appendChildren(contentContainer, [header, createForm]);
-}
-
 
 export { displayContent, displayFirst };
