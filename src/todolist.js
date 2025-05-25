@@ -25,13 +25,18 @@ class Todolist {
 
         
         if (titles.includes(newItem.title.toLowerCase())) {
-            throw Error("That item already exists");
-        } 
-        else if (priorityNums.includes(newItem.priority)) {
+            for (let i = 0; i < this.items.length; i++) {
+                if (this.items[i].title.toLowerCase() === newItem.title.toLowerCase()) {
+                    this.items[i] = newItem;
+                }
+            }
+
+        } else if (priorityNums.includes(newItem.priority)) {
             throw Error("Item with that priority number already exists");
-        }        
+        } else {
+            this.items.push(newItem);
+        }       
         
-        this.items.push(newItem);
     }
 
     removeItem(item) {
