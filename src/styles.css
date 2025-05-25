@@ -14,13 +14,15 @@
 
 /* Common styles */
 
-body, .side-bar, .main-content, #nav-links, #modifiers, #list-header,
-#item-modifiers, form, #list {
+body, .side-bar, .main-content, #nav-links,
+#modifiers, #list-header, #item-modifiers, 
+form, #list, .list-item {
     display: flex;
 }
 
 .side-bar, #list-header,
- form, #list, .main-content {
+form, #list, .main-content,
+.list-item {
     flex-direction: column;
 }
 
@@ -172,15 +174,22 @@ form {
     gap: .8rem;
 }
 
-form, form button {
-    font-size: 1.35rem;    
+form, form button {   
     text-transform: capitalize;
+}
+
+form, form button {
+    font-size: 1.35rem; 
 }
 
 #title-input, #description-text, 
 #due-date-input, #priority-input{
     padding: .15rem;
     font-size: 1.15rem;    
+}
+
+#title-input {
+    width: 24rem;
 }
 
 #add-btn {
@@ -204,11 +213,14 @@ form, form button {
 }
 
 #list > .list-item {
+    gap: 1rem;
+    font-size: 1.15rem;
     color: #fff;
     background-color: #121212;
     padding: .8rem;
     border-radius: .4rem;
     transition: .5s ease;
+    height: 3.125rem;
 }
 
 #list > .list-item:nth-of-type(odd) {

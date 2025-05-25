@@ -37,9 +37,73 @@ function convertItems(list) {
     return convertedItems;
 }
 
+// Used to expand a list item
 
+const resizeElement = (function () {
+    let id = null;
+    clearInterval(id);
+
+    function expandContent (item, height) {
+
+        const grow = () => {
+            const maxHeight = 250;
+
+            if (height === maxHeight) {
+                clearInterval(id);
+            } else {
+                height += 200;
+                item.style.height = `${height}px`;
+            }
+        }
+        grow();
+
+        id = setInterval(grow, 1000);
+        item.classList.value += " resized";
+    }
+
+    function reduceContent (item, height) {
+
+        const shrink = () => {
+
+            if (height === 50) {
+                clearInterval(id);
+            } else {
+                height -= 200;
+                item.style.height = `${height}px`;
+            }
+        }
+        shrink();
+
+        id = setInterval(shrink, 1000);
+
+        const classList = item.classList.value.split(" ");
+        item.classList.value = classList.filter(item => item !== "resized").join("");
+    }
+
+    return { expandContent, reduceContent };
+
+})();
+
+
+// Used for showing the properties of a list item
 function displayInfo(event) {
     const target = event.target;
+    const items = document.querySelectorAll("[data-name='item']");
+
+    for (let i = 0; i < items.length; i++) {
+        const classList = items[i].classList.value.split(" ");
+        const heightValue = items[i].offsetHeight;
+
+        if (items[i] === target) {
+
+            if (classList.includes("resized")) {
+                resizeElement.reduceContent(items[i], heightValue);
+
+            } else {
+                resizeElement.expandContent(items[i], heightValue);
+            }
+        }
+    }
 }
 
 
@@ -60,6 +124,7 @@ function displayContent(list) {
     // Add list items to listWrapper
     list.items.forEach(item => {
         const listItem = createElement({type: "li", id: `${item.priority}`, classList: ["list-item"], text: `${item.title}`});
+        listItem.dataset.name = "item";
         listWrapper.appendChild(listItem);    
     });
 
@@ -126,7 +191,7 @@ function getItemInfo (event) {
     const titleInfo = document.querySelector("[data-name='title']").value;
     const descriptionInfo = document.querySelector("[data-name='description']").value;
     const dueDateInfo = document.querySelector("[data-name='due-date']").value;
-    const priorityInfo = document.querySelector("[data-name='priority']").value;
+    const priorityInfo = parseInt(document.querySelector("[data-name='priority']").value);
 
     const listName = document.querySelector(".highlighted").innerText;
     const info = [titleInfo, descriptionInfo, dueDateInfo, priorityInfo];
@@ -136,6 +201,7 @@ function getItemInfo (event) {
     }
       
     displayContent(JSON.parse(localStorage.getItem("lists"))[listName]);
+    document.querySelector("[data-name='nav-bar']").style.height = `${screen.availHeight}px`;
 }
 
 
