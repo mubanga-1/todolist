@@ -148,7 +148,7 @@ function displayAddForm(list, mode="a", itemTitle="") {
 
     // For each element in form elements object add it to a label and add the label to a wrapper
     for (let element in formElements) {
-        formElements[element].value = editItem[element];
+        mode === "e" ? formElements[element].value = editItem[element] : formElements[element].value = "";
 
         const wrapper = createElement({type: "div", id: "", classList: ["input-wrapper"], text: ""});
 
