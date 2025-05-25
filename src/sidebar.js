@@ -43,7 +43,6 @@ function generateNav() {
     // Functionality for visually toggling between list options
     navLinks.addEventListener("click", switchTab);
     displayFirst(listNames);
-    document.querySelector("data-name['nav-bar']").style.height = `${screen.availHeight}px`;
 }
 
 // Used to display the todolists and other elements of the sidebar
