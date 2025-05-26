@@ -22,7 +22,7 @@ function modify(event)  {
         if (target.id === "create-item") {
             displayAddForm(document.querySelector(".list-heading").innerText);
         } else {
-
+            deleteItem();
         }
     } 
 
@@ -31,9 +31,11 @@ function modify(event)  {
 // Converts given list items from local storage to an Item object
 function convertItems(list) {
     const convertedItems = [];
-    for (let i = 0; i < list.length; i++) {
+    if (list) {
+        for (let i = 0; i < list.length; i++) {
         const {_title, _description, _dueDate, _priority} = list[i];
         convertedItems.push(new Item(_title, _description, _dueDate, _priority));
+        }
     }
 
     return convertedItems;
@@ -183,6 +185,34 @@ function displayAddForm(list, mode="a", itemTitle="") {
     appendChildren(contentContainer, [header, createForm]);
 }
 
+// Deletes list item from list 
+function deleteItem() {
+    // Gets list name and declares variable for item name
+    const listName = document.querySelector(".highlighted").innerText;
+    let itemName;
+
+    while (true) {
+        itemName = window.prompt("Enter title of item: ");
+        
+        if (itemName) {
+            // Get lists object and item's list from local storage and make alterations
+            const lists = JSON.parse(localStorage.getItem("lists"));
+            const list = lists[listName];
+            list.items = convertItems(list.items);
+
+            list.items = list.items.filter(item => item.title !== itemName);
+            localStorage.setItem("lists", JSON.stringify(lists));
+
+            displayContent(listName);
+            break;
+
+        } else {
+            alert("Enter valid title!");
+        }
+
+    }
+}
+
 
 // Used for showing the properties of a list item
 function displayInfo(event) {
@@ -218,7 +248,7 @@ function displayContent(list) {
         listItem.dataset.name = "item";
 
         listItem.innerHTML = `<div id="title">${item.title}</div><div id="date">
-        ${format(new Date(item.dueDate), "MM/dd/yyyy")}</div><div id="priority">${item.priority}</div>`;
+        ${format(item.dueDate, "dd/MM/yyyy")}</div><div id="priority">${item.priority}</div>`;
 
         listWrapper.appendChild(listItem);    
     });
