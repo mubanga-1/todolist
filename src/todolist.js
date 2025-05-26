@@ -82,7 +82,11 @@ class Item {
 
     set dueDate(dueDate) {
         if (dueDate) {
-            this._dueDate = new Date(dueDate);
+            let [year, month, day] = dueDate.split("-");
+            day = day.split("").slice(0, 2).join("");
+
+            const dateFields = [year, month - 1, day].map(Number);
+            this._dueDate = new Date(...dateFields);
         }
     }
 
