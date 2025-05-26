@@ -1,7 +1,3 @@
-Certainly! Here's a straightforward `README.md` tailored for your To-Do List project from The Odin Project:
-
----
-
 # To-Do List App
 
 A simple task management application built with JavaScript, HTML, and CSS. This project is part of The Odin Project curriculum, designed to practice DOM manipulation and local storage integration.
