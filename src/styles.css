@@ -21,8 +21,7 @@ form, #list, .list-item {
 }
 
 .side-bar, #list-header,
-form, #list, .main-content,
-.list-item {
+form, #list, .main-content {
     flex-direction: column;
 }
 
@@ -213,6 +212,7 @@ form, form button {
 }
 
 #list > .list-item {
+    justify-content: space-between;
     gap: 1rem;
     font-size: 1.15rem;
     color: #fff;
