@@ -2,6 +2,8 @@
 import { createElement, appendChildren, clearElement,
 highlight, Todolist, Item } from "./exports.js";
 
+import { format } from "date-fns"
+
 // Checks if on the list item modifiers is clicked
 function modify(event)  {
     const target = event.target;
@@ -186,10 +188,11 @@ function displayAddForm(list, mode="a", itemTitle="") {
 function displayInfo(event) {
     const target = event.target;
     const items = document.querySelectorAll("[data-name='item']");
+    const titleContainer = document.querySelector(`#${target.id} > #title`);
 
     for (let i = 0; i < items.length; i++) {
         if (items[i] === target) {
-            displayAddForm(document.querySelector(".highlighted").innerText, "e", target.innerText);            
+            displayAddForm(document.querySelector(".highlighted").innerText, "e", titleContainer.innerText);            
         }
     }
 }
@@ -211,8 +214,12 @@ function displayContent(list) {
 
     // Add list items to listWrapper
     list.items.forEach(item => {
-        const listItem = createElement({type: "li", id: `${item.priority}`, classList: ["list-item"], text: `${item.title}`});
+        const listItem = createElement({type: "li", id: `item${item.priority}`, classList: ["list-item"], text: ``});
         listItem.dataset.name = "item";
+
+        listItem.innerHTML = `<div id="title">${item.title}</div><div id="date">
+        ${format(new Date(item.dueDate), "MM/dd/yyyy")}</div><div id="priority">${item.priority}</div>`;
+
         listWrapper.appendChild(listItem);    
     });
 
