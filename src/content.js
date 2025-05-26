@@ -203,7 +203,7 @@ function deleteItem() {
             list.items = list.items.filter(item => item.title !== itemName);
             localStorage.setItem("lists", JSON.stringify(lists));
 
-            displayContent(listName);
+            displayContent(JSON.parse(localStorage.getItem("lists"))[listName]);
             break;
 
         } else {
